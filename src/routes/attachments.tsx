@@ -88,13 +88,15 @@ attachments.post("/ideas/:id/voice", async (c) => {
 
   const saved = await saveUpload(blob);
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  // Voice notes are always audio/webm;codecs=opus. The browser/Bun can tag a
+  // .webm part as video/webm, so store the correct audio type explicitly.
   insertAttachment.run(
     newId(),
     ideaId,
     "voice",
     `voice-note-${stamp}.webm`,
     saved.storedName,
-    blob.type || "audio/webm",
+    "audio/webm",
     saved.size,
     Date.now(),
   );

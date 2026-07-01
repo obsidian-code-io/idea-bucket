@@ -210,7 +210,8 @@ const AttachmentItem: FC<{ attachment: AttachmentRow }> = ({
   attachment: a,
 }) => {
   const previewable = isPreviewSafe(a.mime_type);
-  const isAudio = a.mime_type.startsWith("audio/");
+  // Voice notes are always audio even if the sniffed mime says otherwise.
+  const isAudio = a.kind === "voice" || a.mime_type.startsWith("audio/");
   const isImage = a.mime_type.startsWith("image/");
   return (
     <li class="rounded border border-neutral-200 bg-white p-3">

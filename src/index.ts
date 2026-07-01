@@ -17,9 +17,10 @@ app.use("*", logger());
 // Health check is public (no gate) for Dokploy.
 app.get("/healthz", (c) => c.text("ok"));
 
-// Static assets (vendored htmx/sortable, voice.js, built css).
-app.use("/*.js", serveStatic({ root: "./public" }));
-app.use("/*.css", serveStatic({ root: "./public" }));
+// Static assets (vendored htmx/sortable, voice.js, built css). Served from
+// ./public before the gate so styles/scripts load on the login screen too;
+// serveStatic falls through to the routes below when no file matches.
+app.use("/*", serveStatic({ root: "./public" }));
 
 // Team-wide gate + per-user identity for everything else.
 app.use("*", gate);
