@@ -1,0 +1,14 @@
+# Local-only override: publishes the container port to the host and provides
+# safe defaults so `docker compose ... up` works without a populated .env.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+#
+services:
+  idea-bucket:
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_BASIC_AUTH_USER=${APP_BASIC_AUTH_USER:-team}
+      - APP_BASIC_AUTH_PASS=${APP_BASIC_AUTH_PASS:-change-me}
+      - COOKIE_SECRET=${COOKIE_SECRET:-local-dev-insecure-secret-change-me}
+      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-http://localhost:3000}
