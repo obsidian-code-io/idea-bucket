@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Scan server-rendered TSX for class names. */
+@source "../src";
+
+/* Small utility for SortableJS drag ghost visibility. */
+.sortable-ghost {
+  opacity: 0.4;
+}
